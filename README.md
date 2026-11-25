@@ -9,7 +9,9 @@ Telefonda tarayıcıdan açılır, "Ana ekrana ekle" ile normal bir uygulama gib
 
 - **Kişiye özel kitaplık** — giriş yapan herkesin kendi kitapları ve alıntıları
 - **Fotoğrafla alıntı** — kamerayı aç, sayfayı çek, hoşuna giden kısmı parmağınla çerçevele, *Metne çevir*
-  - Türkçe metin tanıma telefonun içinde çalışır (sunucuya fotoğraf gitmez)
+  - Metin, Claude (görüntü anlayan yapay zekâ) ile okunur: kıvrık sayfa, gölge, karşı sayfanın kenarı ve
+    sayfa başlığı sorun olmaz. Anahtar tanımlı değilse ya da bağlantı yoksa telefonun içindeki Türkçe OCR'a
+    (Tesseract) geçilir; o daha az isabetlidir, en iyi sonucu yalnızca alıntıyı çerçeveleyince verir
   - Satır sonundaki tireli kelimeler birleştirilir, metin düzgün paragraf olur
   - Sayfa numarası seçime girmişse otomatik bulunup "Sayfa" alanına yazılır
   - Alıntı iki sayfaya taşıyorsa: *Devamını fotoğrafla ekle*
@@ -52,6 +54,18 @@ Denemek için ideal; ama telefon değişirse veya tarayıcı verisi silinirse gi
 5. Yeniden derle. Giriş ekranı artık e-posta/şifre ister.
 
 Her kullanıcı yalnızca kendi verisini görebilir (Row Level Security).
+
+## Claude ile okuma (önerilen)
+
+Fotoğraftan metin okuma `api/ocr.ts` sunucu fonksiyonunda Claude ile yapılır. Açmak için:
+
+1. https://console.anthropic.com adresinden bir API anahtarı al (ücretli; bir fotoğraf yaklaşık 1–2 kuruş)
+2. Vercel → proje → *Settings → Environment Variables* → `ANTHROPIC_API_KEY` ekle
+3. Yeniden yayınla (Deployments → son yayın → *Redeploy*)
+
+Bu açıkken çekilen fotoğraf (çerçevelenen kısım) okunmak üzere Anthropic'e gönderilir. Not: uç nokta herkese
+açıktır; uygulamanın adresini bilen biri anahtarını kullanabilir. Supabase girişi eklendiğinde yalnızca giriş
+yapmış kullanıcılara açacak şekilde kısıtlanmalı. Anthropic Console'da aylık harcama sınırı koymak iyi olur.
 
 ## Teknik
 

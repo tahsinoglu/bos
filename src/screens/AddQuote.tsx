@@ -113,7 +113,7 @@ export function AddQuote({ params }: { params: URLSearchParams }) {
                 <Icon name="check" /> Metne çevir
               </>
             ) : (
-              <>Okunuyor… %{Math.round(ocr * 100)}</>
+              <>Okunuyor…{ocr > 0 ? ` %${Math.round(ocr * 100)}` : ''}</>
             )}
           </button>
         </div>
