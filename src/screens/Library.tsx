@@ -13,6 +13,14 @@ const dayIndex = (n: number) => {
   return n ? (seed * 2654435761) % n : 0
 }
 
+function greeting() {
+  const h = new Date().getHours()
+  if (h < 5) return 'İyi geceler.'
+  if (h < 11) return 'Günaydın.'
+  if (h < 18) return 'İyi okumalar.'
+  return 'İyi akşamlar.'
+}
+
 export function Library() {
   const { user, books, quotes } = useData()
   const [filter, setFilter] = useState<BookStatus | 'all'>('all')
@@ -29,50 +37,75 @@ export function Library() {
     .sort((a, b) => (a.status === 'reading' ? -1 : 0) - (b.status === 'reading' ? -1 : 0))
   const daily = quotes.length ? quotes[dayIndex(quotes.length)] : null
   const reading = books.find((b) => b.status === 'reading')
+  const today = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' })
 
   return (
     <div className="page">
-      <header className="top">
-        <div>
-          <p className="muted">Merhaba {user?.name},</p>
-          <h1>Kitaplığım</h1>
+      <header className="masthead card">
+        <span className="wordmark">Alıntılarım</span>
+        <div className="masthead-actions">
+          <a className="icon-btn" href="#/ara" aria-label="Ara">
+            <Icon name="search" />
+          </a>
+          <button className="btn accent small" onClick={() => setAdding(true)}>
+            <Icon name="plus" size={16} /> Kitap
+          </button>
         </div>
-        <button className="btn small" onClick={() => setAdding(true)}>
-          <Icon name="plus" size={18} /> Kitap
-        </button>
       </header>
 
-      {books.length > 0 && (
-        <p className="stats">
-          {books.length} kitap · {quotes.length} alıntı · {books.filter((b) => b.status === 'finished').length} bitti
-        </p>
-      )}
+      <section className="card hero">
+        <p className="eyebrow">{today}</p>
+        <h1 className="display">
+          <span className="accent-text">{greeting()}</span> {user?.name}, bugün neler okuyorsun?
+        </h1>
+        {books.length > 0 && (
+          <p className="meta">
+            {books.length} kitap <span className="sep" /> {quotes.length} alıntı <span className="sep" />{' '}
+            {books.filter((b) => b.status === 'finished').length} bitti
+          </p>
+        )}
+        {reading && (
+          <a className="more-link" href={'#/book/' + reading.id}>
+            Okumaya devam: <em>{reading.title}</em> <Icon name="arrow" size={16} />
+          </a>
+        )}
+      </section>
 
       {daily && (
-        <section>
-          <h3 className="section-title">Günün alıntısı</h3>
-          <QuoteItem q={daily} showBook compact />
+        <section className="card section">
+          <div className="section-head">
+            <h3 className="eyebrow">Günün alıntısı</h3>
+            <a className="more-link small" href="#/hatirla">
+              Hatırla <Icon name="arrow" size={14} />
+            </a>
+          </div>
+          <QuoteItem q={daily} showBook compact bare />
         </section>
       )}
 
       {books.length === 0 ? (
-        <div className="empty">
-          <div className="empty-art">📚</div>
-          <h2>Kitaplığın henüz boş</h2>
+        <section className="card empty">
+          <p className="eyebrow">Başlarken</p>
+          <h2 className="display small">
+            Kitaplığın henüz <em>boş.</em>
+          </h2>
           <p>Okuduğun kitabı ekle, sonra hoşuna giden sayfanın fotoğrafını çek. Gerisini biz hallederiz.</p>
           <button className="btn primary" onClick={() => setAdding(true)}>
-            İlk kitabını ekle
+            İlk kitabını ekle <Icon name="arrow" size={16} />
           </button>
-        </div>
+        </section>
       ) : (
-        <>
-          <div className="chips scroll">
+        <section className="card section">
+          <div className="section-head">
+            <h3 className="eyebrow">Kitaplığım</h3>
+          </div>
+          <nav className="tabs-inline">
             {(['all', 'reading', 'finished', 'want'] as const).map((s) => (
-              <button key={s} className={'chip' + (filter === s ? ' on' : '')} onClick={() => setFilter(s)}>
+              <button key={s} className={filter === s ? 'on' : ''} onClick={() => setFilter(s)}>
                 {s === 'all' ? 'Tümü' : STATUS_LABEL[s]}
               </button>
             ))}
-          </div>
+          </nav>
           <div className="book-grid">
             {shown.map((b) => (
               <button key={b.id} className="book" onClick={() => go('/book/' + b.id)}>
@@ -80,20 +113,20 @@ export function Library() {
                   <span className="cover-title">{b.title}</span>
                   {b.author && <span className="cover-author">{b.author}</span>}
                 </div>
-                <div className="book-info">
-                  <span className="badge">{STATUS_LABEL[b.status]}</span>
-                  <span className="muted small">{counts.get(b.id) ?? 0} alıntı</span>
-                </div>
+                <span className="book-title">{b.title}</span>
+                <span className="meta small">
+                  {STATUS_LABEL[b.status]} <span className="sep" /> {counts.get(b.id) ?? 0} alıntı
+                </span>
               </button>
             ))}
             {shown.length === 0 && <p className="muted">Bu rafta kitap yok.</p>}
           </div>
-        </>
+        </section>
       )}
 
       {books.length > 0 && (
         <CaptureButton bookId={reading?.id} className="fab">
-          <Icon name="camera" size={26} />
+          <Icon name="camera" size={22} />
           <span>Alıntı çek</span>
         </CaptureButton>
       )}

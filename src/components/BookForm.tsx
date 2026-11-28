@@ -34,7 +34,8 @@ export function BookForm({ book, onClose, onSaved }: { book?: Book; onClose: () 
   return (
     <div className="sheet-backdrop" onClick={onClose}>
       <form className="sheet" onClick={(e) => e.stopPropagation()} onSubmit={submit}>
-        <h2>{book ? 'Kitabı düzenle' : 'Yeni kitap'}</h2>
+        <div className="sheet-grip" />
+        <h2 className="display small">{book ? 'Kitabı düzenle' : 'Yeni kitap'}</h2>
         <label className="field">
           <span>Kitap adı</span>
           <input autoFocus value={title} onChange={(e) => setTitle(e.target.value)} placeholder="ör. Kürk Mantolu Madonna" />
@@ -43,9 +44,9 @@ export function BookForm({ book, onClose, onSaved }: { book?: Book; onClose: () 
           <span>Yazar</span>
           <input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="ör. Sabahattin Ali" />
         </label>
-        <div className="chips">
+        <div className="segmented">
           {(Object.keys(STATUS_LABEL) as BookStatus[]).map((s) => (
-            <button type="button" key={s} className={'chip' + (s === status ? ' on' : '')} onClick={() => setStatus(s)}>
+            <button type="button" key={s} className={s === status ? 'on' : ''} onClick={() => setStatus(s)}>
               {STATUS_LABEL[s]}
             </button>
           ))}

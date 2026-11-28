@@ -17,8 +17,9 @@ export function Search() {
 
   return (
     <div className="page">
-      <header className="top">
-        <h1>Ara</h1>
+      <header className="page-head">
+        <p className="eyebrow">Tüm alıntılarında</p>
+        <h1 className="display">Ara</h1>
       </header>
       <input
         className="search"

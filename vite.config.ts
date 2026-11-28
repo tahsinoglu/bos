@@ -13,8 +13,8 @@ export default defineConfig({
         short_name: 'Alıntılar',
         description: 'Okurken hoşuna giden yerleri fotoğrafla, sakla, paylaş.',
         lang: 'tr',
-        theme_color: '#f6f1e7',
-        background_color: '#f6f1e7',
+        theme_color: '#f7f6f4',
+        background_color: '#f7f6f4',
         display: 'standalone',
         start_url: '/',
         icons: [
@@ -22,7 +22,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg}'],
+        globPatterns: ['**/*.{js,css,html,svg,woff2}'],
         globIgnores: ['tesseract/**'],
         runtimeCaching: [
           {

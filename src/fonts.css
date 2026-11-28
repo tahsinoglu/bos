@@ -1,0 +1,25 @@
+/*
+ * Fontlar
+ * --------
+ * Tasarım Aposto'nun fontlarına göre kuruldu: Graphik (arayüz) + Canela Text (başlık ve alıntılar).
+ * Bunlar Commercial Type'ın lisanslı fontlarıdır; uygulamaya koymak için web lisansı gerekir
+ * (https://commercialtype.com). Lisansı aldığınızda .woff2 dosyalarını public/fonts/ içine koyup
+ * aşağıdaki @font-face bloklarının yorumunu kaldırmanız yeterli; başka bir değişiklik gerekmez.
+ *
+ * Lisans gelene kadar en yakın ücretsiz karşılıklar kullanılır (uygulamanın içine gömülü, çevrimdışı çalışır):
+ *   Graphik     → Hanken Grotesk
+ *   Canela Text → Newsreader
+ */
+@import '@fontsource-variable/hanken-grotesk/wght.css';
+@import '@fontsource-variable/newsreader/wght.css';
+@import '@fontsource-variable/newsreader/wght-italic.css';
+
+/*
+@font-face { font-family: 'Graphik'; src: url('/fonts/Graphik-Regular-Web.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Graphik'; src: url('/fonts/Graphik-Medium-Web.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Graphik'; src: url('/fonts/Graphik-Semibold-Web.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Canela Text'; src: url('/fonts/CanelaText-Regular-Web.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Canela Text'; src: url('/fonts/CanelaText-RegularItalic-Web.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Canela Text'; src: url('/fonts/CanelaText-Medium-Web.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Canela Text'; src: url('/fonts/CanelaText-Bold-Web.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+*/

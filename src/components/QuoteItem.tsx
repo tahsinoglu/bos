@@ -5,29 +5,56 @@ import { copyText, quoteToText, shareCard, shareText } from '../lib/share'
 import type { Quote } from '../lib/types'
 import { Icon } from './Icon'
 
-export function QuoteItem({ q, showBook = false, compact = false }: { q: Quote; showBook?: boolean; compact?: boolean }) {
+export function QuoteItem({
+  q,
+  showBook = false,
+  compact = false,
+  bare = false,
+}: {
+  q: Quote
+  showBook?: boolean
+  compact?: boolean
+  /** Bir kartın içinde gösteriliyorsa kendi kart çerçevesini çizme */
+  bare?: boolean
+}) {
   const { bookById, saveQuote, deleteQuote, toast } = useData()
   const book = bookById(q.book_id)
   const [menu, setMenu] = useState(false)
   const text = quoteToText(q, book)
 
   return (
-    <article className={'quote' + (compact ? ' compact' : '')} style={{ borderLeftColor: book?.color }}>
-      <p className="quote-text">{q.text}</p>
-      <div className="quote-meta">
+    <article className={'quote' + (compact ? ' compact' : '') + (bare ? ' bare' : ' card')}>
+      <div className="meta quote-meta">
+        <span className="dot" style={{ background: book?.color }} />
         {showBook && book ? (
-          <a href={'#/book/' + book.id} className="quote-src">
-            {book.title}
-            {q.page ? `, s. ${q.page}` : ''}
-          </a>
+          <a href={'#/book/' + book.id}>{book.title}</a>
         ) : (
-          <span className="quote-src">{q.page ? `Sayfa ${q.page}` : 'Sayfa belirtilmedi'}</span>
+          <span>{q.page ? `Sayfa ${q.page}` : 'Sayfa belirtilmedi'}</span>
         )}
+        {showBook && book?.author && (
+          <>
+            <span className="sep" />
+            <span>{book.author}</span>
+          </>
+        )}
+        {showBook && q.page && (
+          <>
+            <span className="sep" />
+            <span>s. {q.page}</span>
+          </>
+        )}
+        {q.favorite && <span className="label">Favori</span>}
       </div>
-      {q.note && <p className="quote-note">💭 {q.note}</p>}
+      <p className="quote-text">{q.text}</p>
+      {q.note && (
+        <p className="quote-note">
+          <span className="eyebrow">Notum</span>
+          {q.note}
+        </p>
+      )}
       <div className="quote-actions">
-        <button className="icon-btn wa" onClick={() => shareText(text)} aria-label="Paylaş">
-          <Icon name="whatsapp" /> <span>Paylaş</span>
+        <button className="pill-btn" onClick={() => shareText(text)} aria-label="Paylaş">
+          <Icon name="whatsapp" size={17} /> Paylaş
         </button>
         <button
           className={'icon-btn' + (q.favorite ? ' fav' : '')}

@@ -20,17 +20,15 @@ export function Rediscover() {
 
   return (
     <div className="page">
-      <header className="top">
-        <div>
-          <p className="muted">Yeniden oku</p>
-          <h1>Hatırla</h1>
-        </div>
+      <header className="page-head">
+        <p className="eyebrow">Yeniden oku</p>
+        <h1 className="display">Hatırla</h1>
       </header>
-      <div className="chips">
-        <button className={'chip' + (!onlyFav ? ' on' : '')} onClick={() => setOnlyFav(false)}>
+      <div className="segmented">
+        <button className={!onlyFav ? 'on' : ''} onClick={() => setOnlyFav(false)}>
           Tüm alıntılar
         </button>
-        <button className={'chip' + (onlyFav ? ' on' : '')} onClick={() => setOnlyFav(true)}>
+        <button className={onlyFav ? 'on' : ''} onClick={() => setOnlyFav(true)}>
           ♥ Favoriler
         </button>
       </div>
@@ -43,14 +41,14 @@ export function Rediscover() {
           </button>
         </div>
       ) : (
-        <p className="muted center">
+        <p className="card empty-note">
           {onlyFav ? 'Henüz favori alıntın yok. Alıntılardaki ♥ ile işaretleyebilirsin.' : 'Alıntı ekledikçe burada karşına çıkacak.'}
         </p>
       )}
 
       {memories.length > 0 && (
         <section>
-          <h3 className="section-title">Geçmişte bu gün</h3>
+          <h3 className="eyebrow section-head outside">Geçmişte bu gün</h3>
           {memories.map((m) => (
             <QuoteItem key={m.id} q={m} showBook />
           ))}

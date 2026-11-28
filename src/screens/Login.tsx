@@ -33,10 +33,22 @@ export function Login() {
 
   return (
     <div className="login">
+      <div className="login-brand">
+        <img src="/icon.svg" alt="" width={36} height={36} />
+        <span className="wordmark">Alıntılarım</span>
+      </div>
       <div className="login-hero">
-        <img src="/icon.svg" alt="" width={72} height={72} />
-        <h1>Kitap Alıntılarım</h1>
-        <p>Okurken altını çizmek istediğin yerleri fotoğrafla, sakla, dilediğinde yeniden oku.</p>
+        <p className="badge-line">
+          <span className="live-dot" /> Fotoğrafla, metne çevir, sakla
+        </p>
+        <h1 className="hero-title">
+          Okuduğun her satır,
+          <em className="swash">seninle kalsın.</em>
+        </h1>
+        <p className="lead">
+          Altını çizmek istediğin yerleri fotoğrafla; kitabına, sayfasına göre saklayalım. <strong>Dilediğinde</strong> yeniden oku,
+          tek dokunuşla paylaş.
+        </p>
       </div>
       <form className="card login-form" onSubmit={submit}>
         {localStore ? (

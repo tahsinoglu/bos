@@ -54,25 +54,26 @@ export function Profile() {
 
   return (
     <div className="page">
-      <header className="top">
-        <div>
-          <p className="muted">{user?.email ?? (store.mode === 'local' ? 'Bu cihazda' : '')}</p>
-          <h1>{user?.name}</h1>
-        </div>
+      <header className="page-head">
+        <p className="eyebrow">{user?.email ?? (store.mode === 'local' ? 'Bu cihazda' : 'Profil')}</p>
+        <h1 className="display">{user?.name}</h1>
       </header>
 
       <div className="stat-grid">
-        <div className="stat">
+        <div className="stat green">
+          <span className="eyebrow">Kitap</span>
           <strong>{books.length}</strong>
-          <span>kitap</span>
+          <span>{books.filter((b) => b.status === 'reading').length} okunuyor</span>
         </div>
-        <div className="stat">
+        <div className="stat purple">
+          <span className="eyebrow">Alıntı</span>
           <strong>{quotes.length}</strong>
-          <span>alıntı</span>
+          <span>{quotes.filter((q) => q.favorite).length} favori</span>
         </div>
-        <div className="stat">
+        <div className="stat orange">
+          <span className="eyebrow">{year}</span>
           <strong>{finishedThisYear}</strong>
-          <span>{year}’te bitti</span>
+          <span>kitap bitti</span>
         </div>
       </div>
       {favBook && quotes.some((q) => q.book_id === favBook.id) && (
@@ -82,7 +83,7 @@ export function Profile() {
       )}
 
       <section className="card settings">
-        <h3>Yedekle</h3>
+        <h3 className="eyebrow">Yedekle</h3>
         <button className="btn wide" onClick={exportText}>
           Tüm alıntıları metin olarak indir
         </button>

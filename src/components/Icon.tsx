@@ -19,6 +19,7 @@ const paths: Record<string, string> = {
   check: 'M5 12l5 5 9-10',
   type: 'M5 6V4h14v2M12 4v16M9 20h6',
   more: 'M5 12h.01M12 12h.01M19 12h.01',
+  arrow: 'M5 12h14M13 6l6 6-6 6',
 }
 
 export function Icon({ name, size = 20, filled = false }: { name: keyof typeof paths | string; size?: number; filled?: boolean }) {

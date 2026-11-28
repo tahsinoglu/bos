@@ -23,6 +23,16 @@ Geliştirme dalı: `claude/cool-goodall-porx9d`
   - Yedek: cihazdaki Tesseract (Türkçe), adaptif eşikleme + düşük güvenli kelime filtresi
   - Gerçek bir kitap fotoğrafında (Kâtibin Kaleminden, s. 79) Tesseract karşı sayfayı ve kıvrık satırları karıştırdı; bu yüzden Claude'a geçildi
 
+- [x] **Arayüz yenilendi** (örnek: aposto.com + lezzetgunleri.com)
+  - Aposto'dan: açık gri zemin üstünde yüzen beyaz kartlar, serif başlıklar, küçük büyük harfli etiketler,
+    ince ayraçlı sekmeler, mavi vurgu (#4956ea), sarı "Favori" etiketi, "kitap | yazar | sayfa" bilgi satırı
+  - Lezzet Günleri'nden: lacivert (#0f172a) hap butonlar, yüzen hap alt menü, italik serif vurgulu giriş başlığı,
+    renkli istatistik kartları, bölmeli (segmented) seçimler
+  - Fontlar: Aposto'nunkiler **Graphik** + **Canela / Canela Text** (Commercial Type, ücretli lisans).
+    Kodda ilk sırada onlar var; lisans alınınca `src/fonts.css` içindeki yorum kaldırılıp dosyalar
+    `public/fonts/` içine konacak. Şimdilik en yakın ücretsiz karşılıklar gömülü: Hanken Grotesk + Newsreader
+  - Paylaşım kartı da yeni tasarıma geçti
+
 ## Bekleyen (kullanıcıdan)
 
 - [ ] **`ANTHROPIC_API_KEY`** Vercel'e eklenecek (Settings → Environment Variables), sonra yeniden yayın.
@@ -32,8 +42,7 @@ Geliştirme dalı: `claude/cool-goodall-porx9d`
 
 ## Yapılacaklar
 
-- [ ] **Arayüz yenileme** — örnek siteler: aposto.com ve lezzetgunleri.com; fontlar Aposto ile aynı olacak
-      (siteler bu ortamdan açılamadı; ekran görüntüsü veya ağ izni bekleniyor)
+- [ ] Graphik + Canela web lisansı alınırsa font dosyalarını eklemek (bkz. `src/fonts.css`)
 - [ ] E-posta ile giriş + bulut eşitleme (Supabase): şema hazır (`supabase/schema.sql`), adımlar README'de
 - [ ] `/api/ocr` uç noktasını sadece giriş yapmış kullanıcılara açmak (şu an adresi bilen herkes kullanabilir)
 - [ ] Claude okumasını gerçek kitap fotoğraflarıyla denemek ve talimatı (prompt) gerekirse iyileştirmek

@@ -26,7 +26,7 @@ export function App() {
     if (user) warmUpOcr()
   }, [user])
 
-  if (!ready) return <div className="splash">📖</div>
+  if (!ready) return <div className="splash">Alıntılarım</div>
   if (!user) return <Login />
 
   let screen
