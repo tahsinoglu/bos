@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useData } from '../lib/data'
+import { SheetBackdrop } from './Sheet'
 import { BOOK_COLORS, STATUS_LABEL, type Book, type BookStatus } from '../lib/types'
 
 export function BookForm({ book, onClose, onSaved }: { book?: Book; onClose: () => void; onSaved?: (b: Book) => void }) {
@@ -32,7 +33,7 @@ export function BookForm({ book, onClose, onSaved }: { book?: Book; onClose: () 
   }
 
   return (
-    <div className="sheet-backdrop" onClick={onClose}>
+    <SheetBackdrop onClose={onClose}>
       <form className="sheet" onClick={(e) => e.stopPropagation()} onSubmit={submit}>
         <div className="sheet-grip" />
         <h2 className="display small">{book ? 'Kitabı düzenle' : 'Yeni kitap'}</h2>
@@ -60,6 +61,6 @@ export function BookForm({ book, onClose, onSaved }: { book?: Book; onClose: () 
           </button>
         </div>
       </form>
-    </div>
+    </SheetBackdrop>
   )
 }

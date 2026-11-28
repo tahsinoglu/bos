@@ -32,6 +32,11 @@ Geliştirme dalı: `claude/cool-goodall-porx9d`
     Kodda ilk sırada onlar var; lisans alınınca `src/fonts.css` içindeki yorum kaldırılıp dosyalar
     `public/fonts/` içine konacak. Şimdilik en yakın ücretsiz karşılıklar gömülü: Hanken Grotesk + Newsreader
   - Paylaşım kartı da yeni tasarıma geçti
+- [x] Telefon testinden düzeltmeler (kullanıcı geri bildirimi):
+  - iPhone'da klavye açılınca alttan açılan pencere kayboluyordu → pencere görünen alana (visualViewport) göre konumlanıyor
+  - "⋯" menüsü dışarı dokununca / kaydırınca kapanıyor
+  - Alıntıda görünür "Görsel" butonu: canlı önizleme, 3 format (Kare 1080×1080, Dikey 1080×1350,
+    Hikâye 1080×1920) ve 3 tema (Açık, Gece, Kitap rengi); son seçim hatırlanıyor
 
 ## Bekleyen (kullanıcıdan)
 

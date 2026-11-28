@@ -132,7 +132,7 @@ main.with-nav { padding-bottom: 104px; }
   display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px 0 12px; border-radius: 999px;
   border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 0.86rem; color: var(--ink);
 }
-.pill-btn svg { color: var(--wa); }
+.pill-btn.wa svg { color: var(--wa); }
 .link { border: none; background: none; color: var(--accent); font-weight: 600; padding: 8px 0; }
 
 /* Aposto tarzı ince ayraçlı sekmeler */
@@ -201,7 +201,8 @@ textarea { resize: vertical; line-height: 1.5; }
 .quote-note { padding: 12px 14px; background: var(--soft); border-radius: 14px; font-size: 0.93rem; line-height: 1.5; display: flex; flex-direction: column; gap: 4px; }
 .quote-note .eyebrow { font-size: 0.66rem; color: var(--muted); }
 .quote-actions { display: flex; align-items: center; gap: 2px; padding-top: 10px; border-top: 1px solid var(--line); }
-.quote-actions .pill-btn { margin-right: auto; }
+.quote-actions .pill-btn + .pill-btn { margin-left: 6px; }
+.quote-actions .pill-btn:nth-of-type(2) { margin-right: auto; }
 .quote-menu {
   position: absolute; right: 12px; bottom: 54px; z-index: 5; background: var(--surface);
   border-radius: 16px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; padding: 6px; min-width: 232px;
@@ -247,9 +248,39 @@ textarea { resize: vertical; line-height: 1.5; }
 .sheet {
   width: 100%; max-width: 640px; background: var(--surface); border-radius: 26px 26px 0 0; padding: 10px 18px max(20px, env(safe-area-inset-bottom));
   display: flex; flex-direction: column; gap: 16px;
+  max-height: 100%; overflow-y: auto; overscroll-behavior: contain;
 }
 .sheet-grip { width: 40px; height: 4px; border-radius: 4px; background: var(--line); align-self: center; margin-bottom: 4px; }
 .sheet .row .btn { flex: 1; }
+
+/* ---------- Görsel paylaşım ---------- */
+.share-sheet { gap: 14px; }
+.card-preview { display: flex; justify-content: center; background: var(--soft); border-radius: 18px; padding: 14px; }
+.card-preview img { display: block; max-width: 100%; max-height: 42dvh; border-radius: 10px; box-shadow: var(--shadow-lg); }
+.card-preview-empty { width: 60%; aspect-ratio: 4 / 5; max-height: 42dvh; border-radius: 10px; background: var(--line); animation: pulse 1s ease-in-out infinite alternate; }
+.card-preview.square .card-preview-empty { aspect-ratio: 1; }
+.card-preview.story .card-preview-empty { aspect-ratio: 9 / 16; width: 40%; }
+@keyframes pulse { to { opacity: .5; } }
+.format-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.format-opt {
+  display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 12px 6px 10px;
+  border: 1.5px solid var(--line); border-radius: 16px; background: var(--surface);
+}
+.format-opt strong { font-size: 0.9rem; color: var(--ink); }
+.format-opt span:last-child { font-size: 0.72rem; color: var(--muted); }
+.format-opt.on { border-color: var(--ink); }
+.format-shape { border: 2px solid currentColor; border-radius: 4px; margin-bottom: 4px; color: var(--muted); }
+.format-opt.on .format-shape { color: var(--ink); }
+.format-shape.square { width: 22px; height: 22px; }
+.format-shape.portrait { width: 20px; height: 25px; }
+.format-shape.story { width: 15px; height: 27px; }
+.theme-options { display: flex; gap: 8px; }
+.theme-opt {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px;
+  border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 600; font-size: 0.84rem; color: var(--ink);
+}
+.theme-opt.on { border-color: var(--ink); }
+.swatch { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
 
 /* ---------- Alt menü (yüzen hap) ---------- */
 .tabbar {
