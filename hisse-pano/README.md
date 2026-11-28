@@ -1,4 +1,4 @@
-# Hisse Pano (geçici isim)
+# Matvuu
 
 Kurban hisse ve bağış afişlerini Canva'ya benzer kolay bir arayüzle hazırlayan tek sayfalık site.
 Derleme gerekmez: `index.html` dosyasını tarayıcıda açman yeterli. İstersen herhangi bir statik

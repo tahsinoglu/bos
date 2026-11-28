@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Hisse Pano</title>
+<title>Matvuu</title>
 <meta name="description" content="Kurban hisse ve bağış afişlerini kolayca hazırla, isimleri ekle, PNG/JPEG olarak indir." />
 <meta name="theme-color" content="#5a32fa" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300c4cc'/%3E%3Cstop offset='1' stop-color='%237d2ae8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cg fill='%23fff'%3E%3Crect x='14' y='14' width='10' height='10' rx='3'/%3E%3Crect x='27' y='14' width='10' height='10' rx='3'/%3E%3Crect x='40' y='14' width='10' height='10' rx='3' opacity='.5'/%3E%3Crect x='14' y='27' width='10' height='10' rx='3'/%3E%3Crect x='27' y='27' width='10' height='10' rx='3' opacity='.5'/%3E%3Crect x='40' y='27' width='10' height='10' rx='3' opacity='.5'/%3E%3Crect x='14' y='44' width='36' height='6' rx='3'/%3E%3C/g%3E%3C/svg%3E" />
@@ -23,7 +23,7 @@ html,body{margin:0;height:100%;background:var(--stage);color:var(--ink);font:14p
 button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
-#app{display:flex;flex-direction:column;height:100%;height:100dvh}
+#app{display:flex;flex-direction:column;height:100%}
 
 /* ---------- Üst çubuk ---------- */
 .topbar{height:56px;flex:none;display:flex;align-items:center;gap:12px;padding:0 12px 0 14px;background:var(--grad);color:#fff;position:relative;z-index:30}
@@ -219,7 +219,7 @@ details.bulk textarea{margin-top:10px;min-height:110px}
 <body>
 <div id="app">
   <header class="topbar">
-    <div class="brand"><span class="brand-logo" id="brandLogo"></span><span class="t">Hisse Pano</span></div>
+    <div class="brand"><span class="brand-logo" id="brandLogo"></span><span class="t">Matvuu</span></div>
     <span class="tb-sep"></span>
     <button class="tb-btn" id="undo" title="Geri al (Ctrl+Z)"></button>
     <button class="tb-btn" id="redo" title="Yinele (Ctrl+Y)"></button>
@@ -268,7 +268,7 @@ details.bulk textarea{margin-top:10px;min-height:110px}
 <script>
 "use strict";
 /* =====================================================================
-   Hisse Pano — kurban hisse / bağış afişi hazırlayıcı
+   Matvuu — kurban hisse / bağış afişi hazırlayıcı
    Tek dosya, derleme gerektirmez. Afiş tamamen <canvas> üzerine çizilir;
    önizleme ve dışa aktarma aynı çizim fonksiyonunu kullanır.
    ===================================================================== */
@@ -1021,7 +1021,7 @@ const PANELS = {
       <p class="note">Satır sonundaki sayı kutu adedidir (yoksa 1).</p>
       <button class="btn light block" id="bulkAdd" style="margin-top:8px">Listeyi ekle</button>
     </details>
-    <button class="btn light block" id="dClear" style="margin-top:10px;color:#c62828">${ic('trash', 17)} Tüm isimleri temizle</button>`,
+    <button class="btn light block" id="dClear" style="margin-top:10px;color:#c62828">${ic('trash', 17)}<span> Tüm isimleri temizle</span></button>`,
   text: () => `
     ${fieldIn('title', 'Başlık', 'Regaib Kandilinde', true)}
     ${fieldIn('subtitle', 'Açıklama', '', true)}
@@ -1154,7 +1154,10 @@ pb.addEventListener('click', e => {
       for (const l of lines){ const m = l.match(/^(.*?)[\s,;:\-]*(?:x|×|\*)?\s*(\d+)\s*(?:kutu|adet)?$/i); const nm = m && m[1].trim() ? m[1].trim() : l; const cnt = m && m[1].trim() ? +m[2] : 1; S.donors.push({ id: uid(), name: nm, count: Math.max(1, cnt) }); c++; }
       if (c){ $('#bulkTxt').value = ''; renderDonors(); changed(); toast(c + ' kişi eklendi'); } break;
     }
-    case 'dClear': if (S.donors.length && confirm('Tüm isimler silinsin mi? (Geri al ile geri getirebilirsin)')){ S.donors = []; renderDonors(); changed(); } break;
+    case 'dClear':
+      if (!S.donors.length) break;
+      if (b.dataset.arm !== '1'){ b.dataset.arm = '1'; b.lastChild.textContent = ' Emin misin? Silmek için tekrar dokun'; setTimeout(() => { if (b.isConnected){ b.dataset.arm = ''; b.lastChild.textContent = ' Tüm isimleri temizle'; } }, 3500); break; }
+      S.donors = []; renderDonors(); changed(); toast('Liste temizlendi · Geri al ile geri getirebilirsin'); b.dataset.arm = ''; b.lastChild.textContent = ' Tüm isimleri temizle'; break;
     case 'resetColors': S.colors = { ...TEMPLATES[S.template].colors }; renderPanel(); changed({ anim: true }); break;
     case 'logoDel': S.logo = null; logoImg = null; renderPanel(); changed(); break;
   }
@@ -1225,14 +1228,22 @@ function makeBlob(type, q){
 }
 const fileName = ext => ((S.docName || 'afis').toLocaleLowerCase('tr-TR').replace(/[çğıöşü]/g, m => ({ç:'c',ğ:'g',ı:'i',ö:'o',ş:'s',ü:'u'}[m])).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'afis') + '.' + ext;
 function busy(o){ $('#busy').classList.toggle('show', o); }
+/* claude.ai içinde açıldıysa indirme platformun "downloads" yeteneğiyle yapılır */
+const dlCapP = window.claude && window.claude.use ? window.claude.use('downloads').catch(() => null) : Promise.resolve(null);
+async function saveBlob(blob, name){
+  const cap = await dlCapP;
+  if (cap){ await cap.save({ filename: name, data: blob }); return; }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
 async function download(type, q){
   busy(true); await new Promise(r => setTimeout(r, 30));
   try {
-    const blob = await makeBlob(type, q); const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = fileName(type === 'jpg' ? 'jpg' : 'png'); document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000); toast('İndirildi ✓');
-  } catch (err){ toast('İndirme başarısız oldu'); console.error(err); }
-  busy(false);
+    const blob = await makeBlob(type, q);
+    busy(false);
+    await saveBlob(blob, fileName(type === 'jpg' ? 'jpg' : 'png')); toast('İndirildi ✓');
+  } catch (err){ busy(false); toast(err && err.code === 'declined' ? 'İndirme iptal edildi' : 'İndirme başarısız oldu'); console.error(err); }
 }
 $('#dlGo').onclick = () => { dlMenu.classList.remove('open'); download(dlType, dlQ); };
 $('#shareBtn').onclick = async () => {
